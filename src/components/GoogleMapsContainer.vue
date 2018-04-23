@@ -14,18 +14,35 @@
                 },
             }
         },
-        props: ['name', 'location'],
-        methods: {
-            showMap(){
-                let lat = this.latLong.latitude;
-                let lng = this.latLong.longitude;
+        props: {
+            name,
+            'latitude': {
+                type: Number,
+                default: function () {
+                    return 39.50
+                }
+            },
+            'longitude': {
+                type: Number,
+                default: function () {
+                    return -98.35
+                }
+            },
+            'zoom': {
+                type: Number,
+                default: function () {
+                    return 4
+                }
+            }
+        },
 
-                const element = document.getElementById(this.theMap);
-                const options = {
-                    zoom: 7,
-                    center: new google.maps.LatLng((lat ? lat : 54.35202520000001), (lng ? lng : 18.64663840000003))
-                };
-                const map = new google.maps.Map(element, options);
+
+        methods: {
+            showMap() {
+                this.map = new google.maps.Map(document.getElementById(this.theMap), {
+                    center: {lat: this.latitude, lng: this.longitude},
+                    zoom: this.zoom
+                });
             }
         },
 
@@ -33,7 +50,7 @@
         mounted() {
             this.showMap();
         },
-        updated(){
+        updated() {
             console.log('updated');
         }
 
