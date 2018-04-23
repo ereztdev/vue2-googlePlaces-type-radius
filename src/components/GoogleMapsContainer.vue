@@ -16,25 +16,6 @@
         },
         props: ['name', 'location'],
         methods: {
-            decodeLatLong() {
-                let geocoder = new google.maps.Geocoder();
-                let theLocation = this.location;
-                let latLong = this.latLong;
-                return new Promise(function (resolve, reject) {
-                    geocoder.geocode({'address': theLocation}, function (results, status) {
-                        if (status === google.maps.GeocoderStatus.OK) {
-                            console.log("resolve(results)", resolve(results));
-                            console.log(results[0].geometry.location.lat());
-                            latLong.latitude = results[0].geometry.location.lat();
-                            latLong.longitude = results[0].geometry.location.lng();
-                        } else {
-                            reject(status);
-                        }
-                    });
-                    console.log('oh here');
-
-                });
-            },
             showMap(){
                 let lat = this.latLong.latitude;
                 let lng = this.latLong.longitude;

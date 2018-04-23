@@ -34,27 +34,10 @@
                 }
                 this.location = searchValue;
                 this.$emit('searchEvent', searchValue);
-                //this.decodeLatLong();
-            },
-
-            decodeLatLong() {
-                if (this.location === '') {
-                    console.log("this.location empty");
-                    return false
-                }
-                console.log('not empty');
-                let geocoder = new google.maps.Geocoder();
-                geocoder.geocode({'address': this.location}, function (results, status) {
-                    console.log("THE LOCATION: " + results[0].geometry.location);
-                    this.latLong = results[0].geometry.location;
-
-                });
             },
         },
         mounted() {
-            $('input').geocomplete({
-                map: '#google-map'
-            })
+            $('input').geocomplete();
         }
     }
 </script>

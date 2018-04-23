@@ -22,22 +22,12 @@
         methods: {
             getSearchLocation(input) {
                 this.location = input;
-                var self = this;
-                //console.log("app.vue getSearchProps: " + input);
+                let self = this;
                 if (this.location === '') {
                     console.log("this.location empty");
                     return false
                 }
                 console.log('not empty');
-                // let geocoder = new google.maps.Geocoder();
-                // let address = this.location;
-                // geocoder.geocode({'address': address}, function (results, status) {
-                //     //console.log("results: " + JSON.stringify(results), "status: " + status);
-                //     self.latLong = results[0].geometry.location;
-                //     console.log("latitude: ", self.latLong.lat());
-                //     console.log("longitude: ", self.latLong.lng());
-                // })
-
             },
         }
     }
