@@ -17,6 +17,8 @@
 </template>
 
 <script>
+    import { Bus } from "../main";
+
     export default {
         name: "GoogleInput",
         data() {
@@ -24,6 +26,7 @@
                 location: ''
             }
         },
+
         methods: {
             submitHandler: function (ev) {
                 let searchValue = '';
@@ -34,10 +37,13 @@
                 }
                 this.location = searchValue;
                 this.$emit('searchEvent', searchValue);
+                Bus.$emit('passLocation', this.location)
+
             },
         },
         mounted() {
             $('input').geocomplete();
+
         }
     }
 </script>

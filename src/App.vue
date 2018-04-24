@@ -29,6 +29,9 @@
                 }
                 console.log('not empty');
             },
+        },
+        mounted(){
+
         }
     }
 </script>
