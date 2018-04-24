@@ -1,9 +1,8 @@
 <template>
     <div class="map-container" :id="theMap"></div>
 </template>
-
 <script>
-    import { Bus } from "../main";
+    import {Bus} from "../main";
 
     export default {
         name: "GoogleMapsContainer",
@@ -15,59 +14,38 @@
                     latitude: 39.5,
                     longitude: -72
                 },
+                zoom: 16
             }
         },
         props: {
             name,
-            // 'latitude': {
-            //     type: Number,
-            //     default: function () {
-            //         return 39.50
-            //     }
-            // },
-            // 'longitude': {
-            //     type: Number,
-            //     default: function () {
-            //         return -98.35
-            //     }
-            // },
-            // 'zoom': {
-            //     type: Number,
-            //     default: function () {
-            //         return 4
-            //     }
-            // }
         },
         methods: {
             showMap() {
                 this.map = new google.maps.Map(document.getElementById(this.theMap), {
                     center: {lat: this.latLong.latitude, lng: this.latLong.longitude},
-                    zoom: 5//this.zoom
+                    zoom: this.zoom
                 });
             },
             geoDecoding() {
                 let geocoder = new google.maps.Geocoder();
                 let theLocation = this.location;
                 let latLong = this.latLong;
-                //console.log(theLocation.default());
                 self = this;
 
-                // if (theLocation) {
-                    return new Promise(function (resolve, reject) {
-                        geocoder.geocode({'address': (theLocation ? theLocation : 'canada')}, function (results, status) {
-                            console.log(results);
-                            if (status === google.maps.GeocoderStatus.OK) {
-                                console.log(results[0].geometry.location.lat(), results[0].geometry.location.lng());
-                                latLong.latitude = results[0].geometry.location.lat();
-                                latLong.longitude = results[0].geometry.location.lng();
-                                var myLatlng = new google.maps.LatLng(latLong.latitude, latLong.longitude);
-                                self.map.panTo(myLatlng);
-                            } else {
-                                reject(status);
-                            }
-                        });
+                return new Promise(function (resolve, reject) {
+                    geocoder.geocode({'address': (theLocation ? theLocation : 'canada')}, function (results, status) {
+                        if (status === google.maps.GeocoderStatus.OK) {
+                            console.log(results[0].geometry.location.lat(), results[0].geometry.location.lng());
+                            latLong.latitude = results[0].geometry.location.lat();
+                            latLong.longitude = results[0].geometry.location.lng();
+                            let myLatlng = new google.maps.LatLng(latLong.latitude, latLong.longitude);
+                            self.map.panTo(myLatlng);
+                        } else {
+                            reject(status);
+                        }
                     });
-                // }
+                });
             }
         },
         mounted() {
