@@ -13,7 +13,7 @@
                 location: {
                     type: String,
                     default: function () {
-                        return 'Israel'
+                        return 'canada'
                     }
                 },
                 latLong: {
@@ -61,7 +61,6 @@
                         geocoder.geocode({'address': theLocation.default()}, function (results, status) {
                             console.log(results);
                             if (status === google.maps.GeocoderStatus.OK) {
-                                console.log("resolve(results)", resolve(results));
                                 console.log(results[0].geometry.location.lat(), results[0].geometry.location.lng());
                                 latLong.latitude = results[0].geometry.location.lat();
                                 latLong.longitude = results[0].geometry.location.lng();
@@ -69,7 +68,6 @@
                                 reject(status);
                             }
                         });
-                        console.log('oh here');
                     });
                 // }
             }
