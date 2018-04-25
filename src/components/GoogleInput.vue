@@ -135,7 +135,7 @@
                 ];
                 let i;
                 for (i = 0; i < gTypes.length; i++) {
-                    document.getElementById("interest-input").innerHTML += '<option id="' + i + '">' + gTypes[i] + '</option>';
+                    document.getElementById("interest-input").innerHTML += '<option id="optionNumber-' + i + '">' + gTypes[i] + '</option>';
                 }
             },
             submitHandler: function () {

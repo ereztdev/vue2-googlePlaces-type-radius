@@ -16,7 +16,8 @@
                     latitude: 43.6532,
                     longitude: -79.3832
                 },
-                zoom: 15
+                zoom: 15,
+                searchResults: []
             }
         },
         props: {
@@ -56,7 +57,7 @@
                             service.nearbySearch(request, callback);
 
                             function callback(results, status) {
-                                console.log("results", results);
+                                // console.log("results", results);
                                 if (status === google.maps.places.PlacesServiceStatus.OK) {
                                     for (var i = 0; i < erez_markers.length; i++) {
                                         erez_markers[i].setMap(null);
@@ -65,8 +66,8 @@
                                     for (let i = 0; i < results.length; i++) {
                                         createMarker(results[i]);
                                     }
-                                    console.log(results);
-                                    console.log(status);
+                                    self.searchResults = results;
+                                    Bus.$emit('passSearchResults', self.searchResults);
                                 }
                             }
 
@@ -88,7 +89,6 @@
         },
         mounted() {
             this.showMap();
-            console.log(this.location, this.interest);
         },
         created() {
             //this.showMap();
