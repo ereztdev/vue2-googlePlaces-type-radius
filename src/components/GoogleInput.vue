@@ -21,6 +21,7 @@
                 @click="submitHandler"
         >Search
         </button>
+        <h3>error:{{errorType}}</h3>
     </div>
 </template>
 
@@ -32,18 +33,60 @@
         data() {
             return {
                 location: '',
-                errors: [],
+                errorType: '',
+                formErrors: {
+                    location: 'Please Enter a location to search',
+                    interest: 'You need to have at least one interest for this search',
+                    radius: 'You have to set a radius'
+                },
                 searched: false
             }
         },
-        computed:{
+        computed: {
             falsify() {
                 return false;
             },
         },
 
         methods: {
+            validation() {
+                //let errorType = undefined;
+                let formValidity = true;
 
+                if (!this.location) {
+                    formValidity = false;
+                    this.errorType = this.formErrors.location
+                }else if(!this.interest){
+                    formValidity = false;
+                    this.errorType = this.formErrors.interest
+                }else if(!this.radius){
+                    formValidity = false;
+                    this.errorType = this.formErrors.radius
+                }else{
+                    return true;
+                }
+
+            },
+            submitHandler() {
+                this.location = $('#search-input').val();
+                this.interest = $('#interest-input').val();
+                this.radius = $('#radius-input').val();
+                
+                if (this.validation()) {
+
+                    this.searched = true;
+                    // this.speak();
+
+
+                    if (!(this.location || this.interest || this.radius)) {
+
+                    }
+                    Bus.$emit('passLocation', this.location);
+                    Bus.$emit('passInterest', this.interest);
+                    Bus.$emit('passRadius', this.radius);
+                    Bus.$emit('passSearched', this.searched);
+                }
+            },
             populateTypes() {
                 let gTypes = [
                     'accounting',
@@ -140,29 +183,13 @@
                 let i;
                 for (i = 0; i < gTypes.length; i++) {
                     document.getElementById("interest-input").innerHTML += '<option id="optionNumber-' + i + '">' +
-                        '' + gTypes[i].replace('_',' ') +
+                        '' + gTypes[i].replace('_', ' ') +
                         '</option>';
                 }
             },
-            submitHandler() {
-                this.location = $('#search-input').val();
-                this.interest = $('#interest-input').val();
-                this.radius = $('#radius-input').val();
-                this.searched = true;
-                // this.speak();
+            
 
-
-                if (!(this.location || this.interest || this.radius)){
-
-                }
-                Bus.$emit('passLocation', this.location);
-                Bus.$emit('passInterest', this.interest);
-                Bus.$emit('passRadius', this.radius);
-                Bus.$emit('passSearched', this.searched);
-
-            },
-
-            speak(){
+            speak() {
                 responsiveVoice.speak(
                     "Your search for " +
                     this.interest +
@@ -213,7 +240,8 @@
         font-weight: 900;
         border: none;
     }
-    .hide{
-        display: none!important;
+
+    .hide {
+        display: none !important;
     }
 </style>
