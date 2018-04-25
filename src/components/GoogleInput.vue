@@ -71,7 +71,7 @@
                     'courthouse',
                     'dentist',
                     'department_store',
-                    'octor',
+                    'doctor',
                     'electrician',
                     'electronics_store',
                     'embassy',
