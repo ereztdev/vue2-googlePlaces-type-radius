@@ -117,7 +117,7 @@
 <style scoped>
     .map-container {
         /*height: calc((100vh/3)*2);*/
-        height: 64vh;
+        height: 62.3vh;
         margin: 0 auto;
         width: 100%;
         background: fuchsia;

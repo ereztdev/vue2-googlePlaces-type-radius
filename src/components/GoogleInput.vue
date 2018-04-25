@@ -21,7 +21,7 @@
                 @click="submitHandler"
         >Search
         </button>
-        <h3>error:{{errorType}}</h3>
+        <h3 class="error">{{errorType}}</h3>
     </div>
 </template>
 
@@ -56,13 +56,13 @@
                 if (!this.location) {
                     formValidity = false;
                     this.errorType = this.formErrors.location
-                }else if(!this.interest){
+                } else if (!this.interest) {
                     formValidity = false;
                     this.errorType = this.formErrors.interest
-                }else if(!this.radius){
+                } else if (!this.radius) {
                     formValidity = false;
                     this.errorType = this.formErrors.radius
-                }else{
+                } else {
                     return true;
                 }
 
@@ -71,20 +71,16 @@
                 this.location = $('#search-input').val();
                 this.interest = $('#interest-input').val();
                 this.radius = $('#radius-input').val();
-                
+
                 if (this.validation()) {
-
                     this.searched = true;
-                    // this.speak();
-
-
-                    if (!(this.location || this.interest || this.radius)) {
-
-                    }
+                    this.speak();
                     Bus.$emit('passLocation', this.location);
                     Bus.$emit('passInterest', this.interest);
                     Bus.$emit('passRadius', this.radius);
                     Bus.$emit('passSearched', this.searched);
+                }else{
+                    this.speak("you shall not pass, " + this.errorType)
                 }
             },
             populateTypes() {
@@ -187,19 +183,20 @@
                         '</option>';
                 }
             },
-            
-
-            speak() {
-                responsiveVoice.speak(
-                    "Your search for " +
-                    this.interest +
-                    ' in '
-                    + this.location +
-                    ' with a radius of ' +
-                    this.radius +
-                    ' meters will appear above. Feel Free to reload this page and search again!'
-                );
-
+            speak(sayThis) {
+                if (!sayThis && this.searched) {
+                    responsiveVoice.speak(
+                        "Your search for " +
+                        this.interest +
+                        ' in '
+                        + this.location +
+                        ' with a radius of ' +
+                        this.radius +
+                        ' meters. Feel Free to reload this page and search again!'
+                    );
+                }else{
+                    responsiveVoice.speak(sayThis);
+                }
             },
         },
         mounted() {
@@ -243,5 +240,15 @@
 
     .hide {
         display: none !important;
+    }
+
+    .error {
+        color: red;
+        text-transform: uppercase;
+        margin-bottom: 0;
+    }
+    .fiddyHeight{
+        height: 50vh!important;
+        transition: all 2s;
     }
 </style>
