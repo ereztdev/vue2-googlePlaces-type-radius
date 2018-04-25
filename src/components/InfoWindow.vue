@@ -1,6 +1,6 @@
 <template>
     <div class="info-window--wrapper">
-        <div id="info-window">
+        <div id="info-window" v-bind:class="{ fiddyHeight: searched }">
             <ul>
                 <li v-for="result in searchResults">
                     <img v-if="result.photos" :src="result.photos[0].getUrl({ 'maxWidth': 140, 'maxHeight': 100 })" />
@@ -24,6 +24,7 @@
         data() {
             return {
                 searchResults: [],
+                searched: false
             }
         },
         // computed:{
@@ -33,17 +34,7 @@
         // },
         methods: {
             parseSearchResults() {
-                let i;
                 console.log(this.searchResults);
-                //console.log(this.searchResults);
-                // let i;
-                // for (i = 0; i < this.searchResults; i++) {
-                //     document.getElementById("info-window ul").innerHTML += '<li id="resultsNumber-"' + i + '>'+this.searchResults[i]+'</li>'
-                //     console.log(this.searchResults[i].name);
-                // }
-                // for (let result of this.searchResults){
-                //     document.getElementById("info-window ul").innerHTML += '<li id="resultsNumber-"' + i + '>'+this.searchResults[i]+'</li>'
-                // }
             }
         },
         mounted() {
@@ -51,6 +42,9 @@
                 this.searchResults = input;
                 this.parseSearchResults();
 
+            });
+            Bus.$on('passSearched', (input) => {
+                this.searched = input;
             });
 
         }
@@ -65,9 +59,13 @@
     #info-window {
         margin: 0 auto;
         width: 100%;
-        height: 20vh;
-        overflow: scroll;
+        overflow-y: scroll;
         background: aquamarine;
+        transition: all 2s;
+    }
+    .fiddyHeight{
+        height: 50vh!important;
+        transition: all 2s;
     }
 
     #info-window ul {

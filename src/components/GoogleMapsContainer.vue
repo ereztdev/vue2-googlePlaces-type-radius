@@ -1,5 +1,5 @@
 <template>
-    <div class="map-container" :id="theMap"></div>
+    <div class="map-container" :id="theMap" v-bind:class="{ fiddyHeight: searched }"></div>
 </template>
 <script>
     import {Bus} from "../main";
@@ -17,6 +17,7 @@
                     longitude: -79.3832
                 },
                 zoom: 15,
+                searched: false,
                 searchResults: []
             }
         },
@@ -89,6 +90,9 @@
         },
         mounted() {
             this.showMap();
+            Bus.$on('passSearched', (input) => {
+                this.searched = input;
+            });
         },
         created() {
             //this.showMap();
@@ -113,7 +117,7 @@
 <style scoped>
     .map-container {
         /*height: calc((100vh/3)*2);*/
-        height: 46vh;
+        height: 64vh;
         margin: 0 auto;
         width: 100%;
         background: fuchsia;

@@ -1,5 +1,5 @@
 <template>
-    <div class="search-wrapper">
+    <div class="search-wrapper" v-bind:class="{ hide: searched }">
         <!--<div id="google-map"></div>-->
         <input
                 id="search-input"
@@ -32,13 +32,18 @@
         data() {
             return {
                 location: '',
-                errors: []
+                errors: [],
+                searched: false
             }
         },
         computed:{
             falsify() {
                 return false;
             },
+        },
+
+        methods: {
+
             populateTypes() {
                 let gTypes = [
                     'accounting',
@@ -134,25 +139,39 @@
                 ];
                 let i;
                 for (i = 0; i < gTypes.length; i++) {
-                    document.getElementById("interest-input").innerHTML += '<option id="optionNumber-' + i + '">' + gTypes[i] + '</option>';
+                    document.getElementById("interest-input").innerHTML += '<option id="optionNumber-' + i + '">' +
+                        '' + gTypes[i].replace('_',' ') +
+                        '</option>';
                 }
-            }
-        },
-
-        methods: {
-            submitHandler: function () {
+            },
+            submitHandler() {
                 this.location = $('#search-input').val();
                 this.interest = $('#interest-input').val();
                 this.radius = $('#radius-input').val();
+                this.searched = true;
+                // this.speak();
 
 
                 if (!(this.location || this.interest || this.radius)){
 
                 }
-
                 Bus.$emit('passLocation', this.location);
                 Bus.$emit('passInterest', this.interest);
                 Bus.$emit('passRadius', this.radius);
+                Bus.$emit('passSearched', this.searched);
+
+            },
+
+            speak(){
+                responsiveVoice.speak(
+                    "Your search for " +
+                    this.interest +
+                    ' in '
+                    + this.location +
+                    ' with a radius of ' +
+                    this.radius +
+                    ' meters will appear above. Feel Free to reload this page and search again!'
+                );
 
             },
         },
@@ -193,5 +212,8 @@
         color: white;
         font-weight: 900;
         border: none;
+    }
+    .hide{
+        display: none!important;
     }
 </style>
