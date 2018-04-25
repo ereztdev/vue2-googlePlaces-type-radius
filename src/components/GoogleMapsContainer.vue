@@ -10,11 +10,13 @@
             return {
                 theMap: "map-for-" + this.name,
                 location: '',
+                interest: '',
+                radius: '',
                 latLong: {
-                    latitude: 39.5,
-                    longitude: -72
+                    latitude: 43.6532,
+                    longitude: -79.3832
                 },
-                zoom: 16
+                zoom: 15
             }
         },
         props: {
@@ -46,11 +48,47 @@
                         }
                     });
                 });
+            },
+            getPlaces() {
+                let map;
+                let service;
+                let infowindow;
+
+                function initialize() {
+                    let pyrmont = new google.maps.LatLng(this.latLong.latitude, this.latLong.longitude);
+                    console.log(pyrmont);
+
+                    map = new google.maps.Map(document.getElementById(this.theMap), {
+                        center: pyrmont,
+                        zoom: this.zoom
+                    });
+
+                    let request = {
+                        location: pyrmont,
+                        radius: this.radius,
+                        type: [this.interest]
+                    };
+
+                    service = new google.maps.places.PlacesService(map);
+                    service.nearbySearch(request, callback);
+
+                    function callback(results, status) {
+                        if (status === google.maps.places.PlacesServiceStatus.OK) {
+                            for (let i = 0; i < results.length; i++) {
+                                let place = results[i];
+                                createMarker(results[i]);
+                            }
+                            console.log(results);
+                            console.log(status);
+                        }
+                    }
+                }
+
             }
         },
         mounted() {
-            //this.geoDecoding();
             this.showMap();
+            console.log(this.location, this.interest);
         },
         created() {
             //this.showMap();
@@ -59,6 +97,15 @@
                 this.location = input;
                 this.geoDecoding();
             });
+            if (this.latLong.latitude && this.latLong.longitude) {
+                Bus.$on('passInterest', (input) => {
+                    this.interest = input;
+                });
+                Bus.$on('passRadius', (input) => {
+                    this.radius = input;
+                });
+                this.getPlaces();
+            }
         },
 
 

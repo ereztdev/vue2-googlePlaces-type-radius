@@ -2,8 +2,8 @@
     <div id="app">
         <!--<img src="./assets/logo.png">-->
         <!--<router-view/>-->
-        <GoogleInput @searchEvent="getSearchLocation($event)"></GoogleInput>
-        <GoogleMapsContainer :location="location" name="medicide-location-project"></GoogleMapsContainer>
+        <GoogleInput></GoogleInput>
+        <GoogleMapsContainer name="medicide-location-project"></GoogleMapsContainer>
     </div>
 </template>
 
@@ -27,7 +27,6 @@
                     console.log("this.location empty");
                     return false
                 }
-                console.log('not empty');
             },
         },
         mounted(){

@@ -2,22 +2,34 @@
     <div class="search-wrapper">
         <div id="google-map"></div>
         <input
-                ref="input"
                 id="search-input"
                 type="text"
-                placeholder="Search Location.."
-                @keypress.enter="submitHandler"
+                placeholder="Search Location"
+                @keypress.enter="falsify"
         />
+        <input
+                id="interest-input"
+                type="text"
+                placeholder="Type Point of Interest"
+                @keypress.enter="falsify"
+        />
+        <input
+                id="radius-input"
+                type="number"
+                placeholder="What Radius of Search"
+                @keypress.enter="falsify"
+        />
+        <br/>
         <button
                 id="search-button"
-                v-on:click="submitHandler"
+                @click="submitHandler"
         >Search
         </button>
     </div>
 </template>
 
 <script>
-    import { Bus } from "../main";
+    import {Bus} from "../main";
 
     export default {
         name: "GoogleInput",
@@ -28,22 +40,22 @@
         },
 
         methods: {
+            falsify() {
+                return false;
+            },
             submitHandler: function (ev) {
-                let searchValue = '';
-                if (ev.target.id === 'search-input') {
-                    searchValue = ev.target.value;
-                } else if (ev.target.id === 'search-button') {
-                    searchValue = document.getElementById('search-input').value;
-                }
-                this.location = searchValue;
-                this.$emit('searchEvent', searchValue);
-                Bus.$emit('passLocation', this.location)
+                this.location = $('#search-input').val();
+                this.interest = $('#interest-input').val();
+                this.radius = $('#radius-input').val();
+
+                Bus.$emit('passLocation', this.location);
+                Bus.$emit('passInterest', this.interest);
+                Bus.$emit('passRadius', this.radius);
 
             },
         },
         mounted() {
-            $('input').geocomplete();
-
+            $('#search-input').geocomplete();
         }
     }
 </script>
@@ -54,14 +66,14 @@
     }
 
     input {
-        width: 60%;
+        /*width: 60%;*/
         font-size: 45px;
         line-height: 50px;
         margin: 0 auto;
     }
 
     #search-button {
-        width: 20%;
+        /*width: 20%;*/
         font-size: 45px;
         line-height: 50px;
         margin: 0 auto;
