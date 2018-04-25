@@ -1,22 +1,18 @@
 <template>
     <div class="search-wrapper">
-        <div id="google-map"></div>
+        <!--<div id="google-map"></div>-->
         <input
                 id="search-input"
                 type="text"
                 placeholder="Search Location"
                 @keypress.enter="falsify"
         />
-        <input
-                id="interest-input"
-                type="text"
-                placeholder="Type Point of Interest"
-                @keypress.enter="falsify"
-        />
+        <select multiple id="interest-input"></select>
         <input
                 id="radius-input"
+                step=100
                 type="number"
-                placeholder="What Radius of Search"
+                placeholder="Radius of Search in Meters"
                 @keypress.enter="falsify"
         />
         <br/>
@@ -35,7 +31,8 @@
         name: "GoogleInput",
         data() {
             return {
-                location: ''
+                location: '',
+                errors: []
             }
         },
 
@@ -43,10 +40,112 @@
             falsify() {
                 return false;
             },
-            submitHandler: function (ev) {
+            populateTypes() {
+                let gTypes = [
+                    'accounting',
+                    'airport',
+                    'amusement_park',
+                    'aquarium',
+                    'art_gallery',
+                    'atm',
+                    'bakery',
+                    'bank',
+                    'bar',
+                    'beauty_salon',
+                    'bicycle_store',
+                    'book_store',
+                    'bowling_alley',
+                    'bus_station',
+                    'cafe',
+                    'campground',
+                    'car_dealer',
+                    'car_rental',
+                    'car_repair',
+                    'car_wash',
+                    'casino',
+                    'cemetery',
+                    'church',
+                    'city_hall',
+                    'clothing_store',
+                    'convenience_store',
+                    'courthouse',
+                    'dentist',
+                    'department_store',
+                    'octor',
+                    'electrician',
+                    'electronics_store',
+                    'embassy',
+                    'fire_station',
+                    'florist',
+                    'funeral_home',
+                    'furniture_store',
+                    'gas_station',
+                    'grocery_or_supermarket',
+                    'gym',
+                    'hair_care',
+                    'hardware_store',
+                    'hindu_temple',
+                    'home_goods_store',
+                    'hospital',
+                    'insurance_agency',
+                    'jewelry_store',
+                    'laundry',
+                    'lawyer',
+                    'library',
+                    'liquor_store',
+                    'local_government_office',
+                    'locksmith',
+                    'lodging',
+                    'meal_delivery',
+                    'meal_takeaway',
+                    'mosque',
+                    'movie_rental',
+                    'movie_theater',
+                    'moving_company',
+                    'museum',
+                    'night_club',
+                    'painter',
+                    'park',
+                    'parking',
+                    'pet_store',
+                    'pharmacy',
+                    'physiotherapist',
+                    'plumber',
+                    'police',
+                    'post_office',
+                    'real_estate_agency',
+                    'restaurant',
+                    'roofing_contractor',
+                    'rv_park',
+                    'school',
+                    'shoe_store',
+                    'shopping_mall',
+                    'spa',
+                    'stadium',
+                    'storage',
+                    'store',
+                    'subway_station',
+                    'synagogue',
+                    'taxi_stand',
+                    'train_station',
+                    'travel_agency',
+                    'university',
+                    'veterinary_care',
+                    'zoo'
+                ];
+                let i;
+                for (i = 0; i < gTypes.length; i++) {
+                    document.getElementById("interest-input").innerHTML += '<option id="' + i + '">' + gTypes[i] + '</option>';
+                }
+            },
+            submitHandler: function () {
                 this.location = $('#search-input').val();
                 this.interest = $('#interest-input').val();
                 this.radius = $('#radius-input').val();
+
+                if (!(this.location || this.interest || this.radius)){
+
+                }
 
                 Bus.$emit('passLocation', this.location);
                 Bus.$emit('passInterest', this.interest);
@@ -56,26 +155,40 @@
         },
         mounted() {
             $('#search-input').geocomplete();
-        }
+            this.populateTypes();
+
+        },
     }
 </script>
 
 <style scoped>
     .search-wrapper {
-        display: block;
+        /*display: none;*/
+        /*height: 50vh;*/
+        display: inline-block;
+        text-align: center;
+        margin: 25px auto;
     }
 
-    input {
-        /*width: 60%;*/
-        font-size: 45px;
-        line-height: 50px;
-        margin: 0 auto;
+    input, #search-button, select {
+        font-size: 25px;
+        line-height: 35.5px;
+        width: 100%;
+        border-radius: 5px;
+    }
+
+    input, select {
+        padding-left: 10px;
+        border: #44c6c5 1px solid;
+        box-sizing: border-box;
+        margin: 5px auto;
+
     }
 
     #search-button {
-        /*width: 20%;*/
-        font-size: 45px;
-        line-height: 50px;
-        margin: 0 auto;
+        background: #1d1d1d;
+        color: white;
+        font-weight: 900;
+        border: none;
     }
 </style>
