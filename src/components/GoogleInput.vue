@@ -36,6 +36,9 @@
             }
         },
         computed:{
+            falsify() {
+                return false;
+            },
             populateTypes() {
                 let gTypes = [
                     'accounting',
@@ -137,9 +140,6 @@
         },
 
         methods: {
-            falsify() {
-                return false;
-            },
             submitHandler: function () {
                 this.location = $('#search-input').val();
                 this.interest = $('#interest-input').val();
