@@ -35,11 +35,7 @@
                 errors: []
             }
         },
-
-        methods: {
-            falsify() {
-                return false;
-            },
+        computed:{
             populateTypes() {
                 let gTypes = [
                     'accounting',
@@ -137,11 +133,18 @@
                 for (i = 0; i < gTypes.length; i++) {
                     document.getElementById("interest-input").innerHTML += '<option id="optionNumber-' + i + '">' + gTypes[i] + '</option>';
                 }
+            }
+        },
+
+        methods: {
+            falsify() {
+                return false;
             },
             submitHandler: function () {
                 this.location = $('#search-input').val();
                 this.interest = $('#interest-input').val();
                 this.radius = $('#radius-input').val();
+
 
                 if (!(this.location || this.interest || this.radius)){
 
