@@ -58,7 +58,6 @@
                             service.nearbySearch(request, callback);
 
                             function callback(results, status) {
-                                // console.log("results", results);
                                 if (status === google.maps.places.PlacesServiceStatus.OK) {
                                     for (var i = 0; i < erez_markers.length; i++) {
                                         erez_markers[i].setMap(null);
@@ -95,8 +94,6 @@
             });
         },
         created() {
-            //this.showMap();
-            //this.geoDecoding();
             Bus.$on('passLocation', (input) => {
                 this.location = input;
                 this.geoDecoding();
@@ -108,7 +105,6 @@
                 Bus.$on('passRadius', (input) => {
                     this.radius = input;
                 });
-                // this.getPlaces();
             }
         },
     }
@@ -116,8 +112,7 @@
 
 <style scoped>
     .map-container {
-        /*height: calc((100vh/3)*2);*/
-        height: 62.3vh;
+        height: 50vh;
         margin: 0 auto;
         width: 100%;
         background: fuchsia;

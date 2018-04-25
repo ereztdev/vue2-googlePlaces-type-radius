@@ -50,9 +50,7 @@
 
         methods: {
             validation() {
-                //let errorType = undefined;
                 let formValidity = true;
-
                 if (!this.location) {
                     formValidity = false;
                     this.errorType = this.formErrors.location
@@ -210,10 +208,10 @@
 <style scoped>
     .search-wrapper {
         /*display: none;*/
-        /*height: 50vh;*/
+        height: 48vh;
         display: inline-block;
         text-align: center;
-        margin: 25px auto;
+        margin: 0 auto;
     }
 
     input, #search-button, select {

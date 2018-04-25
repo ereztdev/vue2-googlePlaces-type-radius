@@ -27,11 +27,6 @@
                 searched: false
             }
         },
-        // computed:{
-        //   venueTypes(){
-        //       let theVenueTypes =
-        //   }
-        // },
         methods: {
             parseSearchResults() {
                 console.log(this.searchResults);
@@ -46,7 +41,6 @@
             Bus.$on('passSearched', (input) => {
                 this.searched = input;
             });
-
         }
     }
 </script>
