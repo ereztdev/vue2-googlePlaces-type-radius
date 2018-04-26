@@ -9,10 +9,10 @@
                     <p v-if="result.opening_hours">Is it open now? <span v-bind:style="result.opening_hours.open_now ? 'color:green' : 'color:red'">{{(result.opening_hours.open_now ? 'Yes :)': 'Nope :(')}}</span></p>
                     <p v-else>Is it open now? No info on that.</p>
                     <p class="venue-types">This location is associated with the following venue types: <strong>{{(result.types.filter(type => type !== "establishment" && type !== "point_of_interest").join(", ").replace("_", " "))}}</strong></p>
-
                 </li>
             </ul>
         </div>
+        <h2></h2>
     </div>
 </template>
 
@@ -81,4 +81,9 @@
     .venue-types{
         text-decoration: underline;
     }
+
+    @media only screen and (max-width: 767px) {
+
+    }
+
 </style>

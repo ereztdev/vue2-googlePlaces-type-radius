@@ -1,11 +1,13 @@
 <template>
+
     <div id="app">
         <!--<img src="./assets/logo.png">-->
         <!--<router-view/>-->
         <InfoWindow></InfoWindow>
         <GoogleInput></GoogleInput>
-        <GoogleMapsContainer name="medicide-location-project"></GoogleMapsContainer>
+        <GoogleMapsContainer name="googlePlaces-location-project"></GoogleMapsContainer>
     </div>
+
 </template>
 
 <script>
@@ -21,18 +23,8 @@
                 location: '',
             }
         },
-        methods: {
-            getSearchLocation(input) {
-                this.location = input;
-                let self = this;
-                if (this.location === '') {
-                    console.log("this.location empty");
-                    return false
-                }
-            },
-        },
+        methods: {        },
         mounted() {
-
         }
     }
 </script>
